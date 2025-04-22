@@ -56,7 +56,7 @@ export function TestDriveForm({ car, testDriveInfo }) {
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [bookingDetails, setBookingDetails] = useState(null);
-
+  
   // Initialize react-hook-form with zod resolver
   const {
     control,
@@ -68,19 +68,22 @@ export function TestDriveForm({ car, testDriveInfo }) {
   } = useForm({
     resolver: zodResolver(testDriveSchema),
     defaultValues: {
-      date: undefined,
-      timeSlot: undefined,
+      date:"",
+      timeSlot: "",
       notes: "",
     },
   });
-
+  
   // Get dealership and booking information
   const dealership = testDriveInfo?.dealership;
   const existingBookings = testDriveInfo?.existingBookings || [];
-
+  
   // Watch date field to update available time slots
-  const selectedDate = watch("date");
+  // const selectedRange = watch("dateRange");
+  // const selectedDate = selectedRange?.from; // use start date for slot checking
 
+  const selectedDate = watch("date");
+  
   // Custom hooks for API calls
   const {
     loading: bookingInProgress,
@@ -88,12 +91,13 @@ export function TestDriveForm({ car, testDriveInfo }) {
     data: bookingResult,
     error: bookingError,
   } = useFetch(bookTestDrive);
-
+  
   // Handle successful booking
   useEffect(() => {
     if (bookingResult?.success) {
       setBookingDetails({
-        date: format(bookingResult?.data?.bookingDate, "EEEE, MMMM d, yyyy"),
+        startDate: format(bookingResult?.data?.bookingDate, "EEEE, MMMM d, yyyy"),
+        endDate: format(bookingResult?.data?.bookingEndDate, "EEEE, MMMM d, yyyy"),
         timeSlot: `${format(
           parseISO(`2022-01-01T${bookingResult?.data?.startTime}`),
           "h:mm a"
@@ -104,12 +108,12 @@ export function TestDriveForm({ car, testDriveInfo }) {
         notes: bookingResult?.data?.notes,
       });
       setShowConfirmation(true);
-
+  
       // Reset form
       reset();
     }
   }, [bookingResult, reset]);
-
+  
   // Handle booking error
   useEffect(() => {
     if (bookingError) {
@@ -118,8 +122,8 @@ export function TestDriveForm({ car, testDriveInfo }) {
       );
     }
   }, [bookingError]);
-
-  // Update available time slots when date changes
+  
+  // Update available time slots when start date changes
   useEffect(() => {
     if (!selectedDate || !dealership?.workingHours) return;
 
@@ -170,44 +174,54 @@ export function TestDriveForm({ car, testDriveInfo }) {
     setValue("timeSlot", "");
   }, [selectedDate]);
 
+  
+  
   // Create a function to determine which days should be disabled
   const isDayDisabled = (day) => {
     // Disable past dates
     if (day < new Date()) {
       return true;
     }
-
+  
     // Get day of week
     const dayOfWeek = format(day, "EEEE").toUpperCase();
-
+  
     // Find working hours for the day
     const daySchedule = dealership?.workingHours?.find(
       (schedule) => schedule.dayOfWeek === dayOfWeek
     );
-
+  
     // Disable if dealership is closed on this day
     return !daySchedule || !daySchedule.isOpen;
   };
-
+  
   // Submit handler
   const onSubmit = async (data) => {
+    if (!data?.timeSlot) {
+      toast.error("Please select a valid time slot");
+      return;
+    }
+  
     const selectedSlot = availableTimeSlots.find(
       (slot) => slot.id === data.timeSlot
     );
-
+  
     if (!selectedSlot) {
       toast.error("Selected time slot is not available");
       return;
     }
-
+  
     await bookTestDriveFn({
       carId: car.id,
-      bookingDate: format(data.date, "yyyy-MM-dd"),
+      bookingDate: format(data.date, "yyyy-MM-dd"), // Note: Use "data.date" instead of "data.dateRange.from"
+      bookingEndDate: format(data.date, "yyyy-MM-dd"), // Update as needed for your use case
       startTime: selectedSlot.startTime,
       endTime: selectedSlot.endTime,
       notes: data.notes || "",
     });
   };
+  
+  
 
   // Close confirmation handler
   const handleCloseConfirmation = () => {
@@ -303,8 +317,8 @@ export function TestDriveForm({ car, testDriveInfo }) {
             <h2 className="text-xl font-bold mb-6">Schedule Your Test Drive</h2>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              {/* Date Selection */}
-              <div className="space-y-2">
+                          {/* Date Selection - Start Date */}
+                <div className="space-y-2">
                 <label className="block text-sm font-medium">
                   Select a Date
                 </label>
@@ -348,6 +362,47 @@ export function TestDriveForm({ car, testDriveInfo }) {
                 />
               </div>
 
+          {/* Date Selection - End Date */}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium">End Date</label>
+            <Controller
+              name="endDate"
+              control={control}
+              render={({ field }) => (
+                <div>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-full justify-start text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {field.value ? format(field.value, "PPP") : "Pick an end date"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={!isDayDisabled}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  {errors.endDate && (
+                    <p className="text-sm font-medium text-red-500 mt-1">
+                      {errors.endDate.message}
+                    </p>
+                  )}
+                </div>
+              )}
+            />
+          </div>
+
               {/* Time Slot Selection */}
               <div className="space-y-2">
                 <label className="block text-sm font-medium">
@@ -368,7 +423,7 @@ export function TestDriveForm({ car, testDriveInfo }) {
                         <SelectTrigger>
                           <SelectValue
                             placeholder={
-                              !selectedDate
+                              selectedDate
                                 ? "Please select a date first"
                                 : availableTimeSlots.length === 0
                                 ? "No available slots on this date"
@@ -463,8 +518,7 @@ export function TestDriveForm({ car, testDriveInfo }) {
               Your test drive has been confirmed with the following details:
             </DialogDescription>
           </DialogHeader>
-
-          {bookingDetails && (
+                    {bookingDetails && (
             <div className="py-4">
               <div className="space-y-3">
                 <div className="flex justify-between">
@@ -474,8 +528,12 @@ export function TestDriveForm({ car, testDriveInfo }) {
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="font-medium">Date:</span>
-                  <span>{bookingDetails.date}</span>
+                  <span className="font-medium">Start Date:</span>
+                  <span>{bookingDetails.startDate}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium">End Date:</span>
+                  <span>{bookingDetails.endDate}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium">Time Slot:</span>
@@ -492,6 +550,7 @@ export function TestDriveForm({ car, testDriveInfo }) {
               </div>
             </div>
           )}
+
 
           <div className="flex justify-end">
             <Button onClick={handleCloseConfirmation}>Done</Button>

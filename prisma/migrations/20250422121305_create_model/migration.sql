@@ -2,7 +2,7 @@
 CREATE TYPE "UserRole" AS ENUM ('USER', 'ADMIN');
 
 -- CreateEnum
-CREATE TYPE "ItemStatus" AS ENUM ('AVAILABLE', 'UNAVAILABLE', 'SOLD');
+CREATE TYPE "CarStatus" AS ENUM ('AVAILABLE', 'UNAVAILABLE', 'SOLD');
 
 -- CreateEnum
 CREATE TYPE "DayOfWeek" AS ENUM ('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY');
@@ -26,47 +26,35 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
-CREATE TABLE "item" (
+CREATE TABLE "Car" (
     "id" TEXT NOT NULL,
-    "brand" TEXT NOT NULL,
+    "make" TEXT NOT NULL,
     "model" TEXT NOT NULL,
     "year" INTEGER NOT NULL,
     "price" DECIMAL(10,2) NOT NULL,
+    "mileage" INTEGER NOT NULL,
     "color" TEXT NOT NULL,
+    "fuelType" TEXT NOT NULL,
+    "transmission" TEXT NOT NULL,
+    "bodyType" TEXT NOT NULL,
+    "seats" INTEGER,
     "description" TEXT NOT NULL,
-    "status" "ItemStatus" NOT NULL DEFAULT 'AVAILABLE',
+    "status" "CarStatus" NOT NULL DEFAULT 'AVAILABLE',
     "featured" BOOLEAN NOT NULL DEFAULT false,
+    "images" TEXT[],
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Item_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "ItemImage" (
-    "id" TEXT NOT NULL,
-    "carId" TEXT NOT NULL,
-    "url" TEXT NOT NULL,
-    "isPrimary" BOOLEAN NOT NULL DEFAULT false,
-    "order" INTEGER NOT NULL DEFAULT 0,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "CarImage_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Car_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "DealershipInfo" (
     "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "address" TEXT NOT NULL,
-    "city" TEXT NOT NULL,
-    "state" TEXT NOT NULL,
-    "postalCode" TEXT NOT NULL,
-    "country" TEXT NOT NULL,
-    "phone" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "website" TEXT,
-    "logoUrl" TEXT,
+    "name" TEXT NOT NULL DEFAULT 'Vehiql Motors',
+    "address" TEXT NOT NULL DEFAULT '69 Car Street, Autoville, CA 69420',
+    "phone" TEXT NOT NULL DEFAULT '+1 (555) 123-4567',
+    "email" TEXT NOT NULL DEFAULT 'contact@vehiql.com',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -103,6 +91,7 @@ CREATE TABLE "TestDriveBooking" (
     "carId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "bookingDate" DATE NOT NULL,
+    "bookingEndDate" DATE,
     "startTime" TEXT NOT NULL,
     "endTime" TEXT NOT NULL,
     "status" "BookingStatus" NOT NULL DEFAULT 'PENDING',
@@ -141,9 +130,6 @@ CREATE INDEX "Car_fuelType_idx" ON "Car"("fuelType");
 CREATE INDEX "Car_featured_idx" ON "Car"("featured");
 
 -- CreateIndex
-CREATE INDEX "CarImage_carId_idx" ON "CarImage"("carId");
-
--- CreateIndex
 CREATE INDEX "WorkingHour_dealershipId_idx" ON "WorkingHour"("dealershipId");
 
 -- CreateIndex
@@ -174,10 +160,10 @@ CREATE INDEX "TestDriveBooking_userId_idx" ON "TestDriveBooking"("userId");
 CREATE INDEX "TestDriveBooking_bookingDate_idx" ON "TestDriveBooking"("bookingDate");
 
 -- CreateIndex
-CREATE INDEX "TestDriveBooking_status_idx" ON "TestDriveBooking"("status");
+CREATE INDEX "TestDriveBooking_bookingEndDate_idx" ON "TestDriveBooking"("bookingEndDate");
 
--- AddForeignKey
-ALTER TABLE "CarImage" ADD CONSTRAINT "CarImage_carId_fkey" FOREIGN KEY ("carId") REFERENCES "Car"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+-- CreateIndex
+CREATE INDEX "TestDriveBooking_status_idx" ON "TestDriveBooking"("status");
 
 -- AddForeignKey
 ALTER TABLE "WorkingHour" ADD CONSTRAINT "WorkingHour_dealershipId_fkey" FOREIGN KEY ("dealershipId") REFERENCES "DealershipInfo"("id") ON DELETE CASCADE ON UPDATE CASCADE;

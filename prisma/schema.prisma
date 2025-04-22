@@ -116,26 +116,45 @@ model UserSavedCar {
   @@index([carId])
 }
 
+// model TestDriveBooking {
+//   id            String        @id @default(uuid())
+//   carId         String
+//   car           Car           @relation(fields: [carId], references: [id])
+//   userId        String
+//   user          User          @relation(fields: [userId], references: [id])
+//   bookingDate   DateTime      @db.Date
+//   startTime     String        // Format: "HH:MM" (24-hour)
+//   status        BookingStatus @default(PENDING)
+//   notes         String?
+//   createdAt     DateTime      @default(now())
+//   updatedAt     DateTime      @updatedAt
+
+//   @@index([carId])
+//   @@index([userId])
+//   @@index([bookingDate])
+//   @@index([status])
+// }
+
+
 model TestDriveBooking {
-  id            String        @id @default(uuid())
-  carId         String
-  car           Car           @relation(fields: [carId], references: [id])
-  userId        String
-  user          User          @relation(fields: [userId], references: [id])
-  bookingDate   DateTime      @db.Date
-  startTime     String        // Format: "HH:MM" (24-hour)
-  endTime       String        // Format: "HH:MM" (24-hour)
-  status        BookingStatus @default(PENDING)
-  notes         String?
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  id              String        @id @default(uuid())
+  carId           String
+  car             Car           @relation(fields: [carId], references: [id])
+  userId          String
+  user            User          @relation(fields: [userId], references: [id])
+  bookingDate     DateTime      @db.Date           // Start date of the booking
+  bookingEndDate  DateTime?     @db.Date           // Optional end date for range bookings
+  status          BookingStatus @default(PENDING)
+  notes           String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 
   @@index([carId])
   @@index([userId])
   @@index([bookingDate])
+  @@index([bookingEndDate])
   @@index([status])
 }
-
 enum BookingStatus {
   PENDING
   CONFIRMED
