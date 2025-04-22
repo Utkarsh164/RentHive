@@ -45,6 +45,10 @@ const testDriveSchema = z.object({
   date: z.date({
     required_error: "Please select a date for your test drive",
   }),
+
+  endDate: z.date({
+    required_error: "Please select a date for your test drive",
+  }),
   timeSlot: z.string({
     required_error: "Please select a time slot",
   }),
@@ -214,7 +218,7 @@ export function TestDriveForm({ car, testDriveInfo }) {
     await bookTestDriveFn({
       carId: car.id,
       bookingDate: format(data.date, "yyyy-MM-dd"), // Note: Use "data.date" instead of "data.dateRange.from"
-      bookingEndDate: format(data.date, "yyyy-MM-dd"), // Update as needed for your use case
+      bookingEndDate: format(data.endDate, "yyyy-MM-dd"), // Update as needed for your use case
       startTime: selectedSlot.startTime,
       endTime: selectedSlot.endTime,
       notes: data.notes || "",

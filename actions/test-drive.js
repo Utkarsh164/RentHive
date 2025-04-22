@@ -11,6 +11,7 @@ import { serializeCarData } from "@/lib/helpers";
 export async function bookTestDrive({
   carId,
   bookingDate,
+  bookingEndDate,
   startTime,
   endTime,
   notes,
@@ -56,6 +57,7 @@ export async function bookTestDrive({
         carId,
         userId: user.id,
         bookingDate: new Date(bookingDate),
+        bookingEndDate: new Date(bookingEndDate),
         startTime,
         endTime,
         notes: notes || null,
@@ -120,6 +122,7 @@ export async function getUserTestDrives() {
       carId: booking.carId,
       car: serializeCarData(booking.car),
       bookingDate: booking.bookingDate.toISOString(),
+      bookingEndDate: booking.bookingEndDate.toISOString(),
       startTime: booking.startTime,
       endTime: booking.endTime,
       status: booking.status,
