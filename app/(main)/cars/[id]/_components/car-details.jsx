@@ -105,7 +105,7 @@ export function CarDetails({ car, testDriveInfo }) {
       router.push("/sign-in");
       return;
     }
-    router.push(`/test-drive/${car.id}`);
+    router.push(`/booking/${car.id}`);
   };
 
   return (

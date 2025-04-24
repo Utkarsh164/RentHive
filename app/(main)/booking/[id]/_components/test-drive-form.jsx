@@ -36,7 +36,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { bookTestDrive } from "@/actions/test-drive";
+import { bookTestDrive } from "@/actions/booking";
 import { toast } from "sonner";
 import useFetch from "@/hooks/use-fetch";
 
@@ -548,7 +548,7 @@ export function TestDriveForm({ car, testDriveInfo }) {
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium">Dealership:</span>
-                  <span>{dealership?.name || "RentHive Motors"}</span>
+                  <span>{"RentHive Motors"}</span>
                 </div>
               </div>
 

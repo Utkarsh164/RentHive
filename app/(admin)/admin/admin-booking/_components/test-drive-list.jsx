@@ -23,7 +23,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { TestDriveCard } from "@/components/test-drive-card";
 import useFetch from "@/hooks/use-fetch";
 import { getAdminTestDrives, updateTestDriveStatus } from "@/actions/admin";
-import { cancelTestDrive } from "@/actions/test-drive";
+import { cancelTestDrive } from "@/actions/booking";
 
 export const TestDrivesList = () => {
   const [search, setSearch] = useState("");

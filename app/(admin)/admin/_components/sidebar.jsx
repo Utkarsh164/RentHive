@@ -21,7 +21,7 @@ const routes = [
   {
     label: "Bookings",
     icon: Calendar,
-    href: "/admin/test-drives",
+    href: "/admin/admin-booking",
   },
   {
     label: "Settings",

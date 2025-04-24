@@ -1,4 +1,4 @@
-import { getUserTestDrives } from "@/actions/test-drive";
+import { getUserTestDrives } from "@/actions/booking";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { ReservationsList } from "./_components/reservations-list";
