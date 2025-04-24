@@ -106,8 +106,21 @@ export function TestDriveCard({
             <div className="space-y-2 my-2">
               <div className="flex items-center text-gray-600">
                 <Calendar className="h-4 w-4 mr-2" />
-                {format(new Date(booking.bookingDate), "EEEE, MMMM d, yyyy")}
+                {format(new Date(booking.bookingDate), "EEEE, MMMM d, yyyy")} - {format(new Date(booking.bookingEndDate), "EEEE, MMMM d, yyyy")}
               </div>
+
+
+              
+              {/* <div className="flex items-center text-gray-600">
+                <Calendar className="h-4 w-4 mr-2" />
+                
+              </div> */}
+
+
+
+
+
+
               <div className="flex items-center text-gray-600">
                 <Clock className="h-4 w-4 mr-2" />
                 {formatTime(booking.startTime)} - {formatTime(booking.endTime)}

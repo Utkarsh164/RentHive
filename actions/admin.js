@@ -94,6 +94,7 @@ export async function getAdminTestDrives({ search = "", status = "" }) {
       userId: booking.userId,
       user: booking.user,
       bookingDate: booking.bookingDate.toISOString(),
+      bookingEndDate:booking.bookingEndDate.toISOString(),
       startTime: booking.startTime,
       endTime: booking.endTime,
       status: booking.status,
