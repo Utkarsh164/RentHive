@@ -107,7 +107,7 @@ export async function getAdminTestDrives({ search = "", status = "" }) {
       data: formattedBookings,
     };
   } catch (error) {
-    console.error("Error fetching test drives:", error);
+    console.error("Error fetching:", error);
     return {
       success: false,
       error: error.message,
@@ -168,10 +168,10 @@ export async function updateTestDriveStatus(bookingId, newStatus) {
 
     return {
       success: true,
-      message: "Test drive status updated successfully",
+      message: "Booking status updated successfully",
     };
   } catch (error) {
-    throw new Error("Error updating test drive status:" + error.message);
+    throw new Error("Error updating booking status:" + error.message);
   }
 }
 

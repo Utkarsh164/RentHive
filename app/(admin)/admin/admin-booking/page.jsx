@@ -2,7 +2,7 @@ import { TestDrivesList } from "./_components/test-drive-list";
 
 export const metadata = {
   title: "Bookings | RentHive",
-  description: "Manage test drive bookings",
+  description: "Manage bookings",
 };
 
 export default function TestDrivesPage() {

@@ -19,7 +19,7 @@ export async function bookTestDrive({
   try {
     // Authenticate user
     const { userId } = await auth();
-    if (!userId) throw new Error("You must be logged in to book a test drive");
+    if (!userId) throw new Error("You must be logged in to booking");
 
     // Find user in our database
     const user = await db.user.findUnique({
@@ -33,7 +33,7 @@ export async function bookTestDrive({
       where: { id: carId, status: "AVAILABLE" },
     });
 
-    if (!car) throw new Error("Car not available for test drive");
+    if (!car) throw new Error("Car not available for booking");
 
     // Check if slot is already booked
     const existingBooking = await db.testDriveBooking.findFirst({
@@ -66,7 +66,8 @@ export async function bookTestDrive({
     });
 
     // Revalidate relevant paths
-    revalidatePath(`/test-drive/${carId}`);
+    // revalidatePath(`/test-drive/${carId}`);
+    revalidatePath(`/booking/${carId}`);
     revalidatePath(`/cars/${carId}`);
 
     return {
@@ -74,10 +75,10 @@ export async function bookTestDrive({
       data: booking,
     };
   } catch (error) {
-    console.error("Error booking test drive:", error);
+    console.error("Error booking booking:", error);
     return {
       success: false,
-      error: error.message || "Failed to book test drive",
+      error: error.message || "Failed to book booking",
     };
   }
 }
@@ -136,7 +137,7 @@ export async function getUserTestDrives() {
       data: formattedBookings,
     };
   } catch (error) {
-    console.error("Error fetching test drives:", error);
+    console.error("Error fetching:", error);
     return {
       success: false,
       error: error.message,
@@ -182,7 +183,7 @@ export async function cancelTestDrive(bookingId) {
     }
 
     // Check if user owns this booking
-    if (booking.userId !== user.id || user.role !== "ADMIN") {
+    if (booking.userId !== user.id && user.role !== "ADMIN") {
       return {
         success: false,
         error: "Unauthorized to cancel this booking",
@@ -212,14 +213,14 @@ export async function cancelTestDrive(bookingId) {
 
     // Revalidate paths
     revalidatePath("/reservations");
-    revalidatePath("/admin/test-drives");
-
+    // revalidatePath("/admin/test-drives");
+    revalidatePath("/admin/admin-booking");
     return {
       success: true,
-      message: "Test drive cancelled successfully",
+      message: "Cancelled successfully",
     };
   } catch (error) {
-    console.error("Error cancelling test drive:", error);
+    console.error("Error cancelling:", error);
     return {
       success: false,
       error: error.message,

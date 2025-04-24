@@ -37,8 +37,8 @@ export function ReservationsList({ initialData }) {
         </div>
         <h3 className="text-lg font-medium mb-2">No Reservations Found</h3>
         <p className="text-gray-500 mb-6 max-w-md">
-          You don't have any test drive reservations yet. Browse our cars and
-          book a test drive to get started.
+          You don't have any reservations yet. Browse our cars and
+          book to get started.
         </p>
         <Button variant="default" asChild>
           <Link href="/cars">Browse Cars</Link>
@@ -51,9 +51,9 @@ export function ReservationsList({ initialData }) {
     <div className="space-y-6">
       {/* Upcoming Bookings */}
       <div>
-        <h2 className="text-2xl font-bold mb-4">Upcoming Test Drives</h2>
+        <h2 className="text-2xl font-bold mb-4">Upcoming Reservations</h2>
         {upcomingBookings.length === 0 ? (
-          <p className="text-gray-500 italic">No upcoming test drives.</p>
+          <p className="text-gray-500 italic">No upcoming.</p>
         ) : (
           <div className="space-y-3">
             {upcomingBookings.map((booking) => (
@@ -74,7 +74,7 @@ export function ReservationsList({ initialData }) {
       {/* Past Bookings */}
       {pastBookings.length > 0 && (
         <div>
-          <h2 className="text-2xl font-bold mb-4">Past Test Drives</h2>
+          <h2 className="text-2xl font-bold mb-4">Past Reservation</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {pastBookings.map((booking) => (
               <TestDriveCard

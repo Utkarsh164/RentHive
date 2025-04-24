@@ -174,9 +174,9 @@ export function TestDriveCard({
         <Dialog open={cancelDialogOpen} onOpenChange={setCancelDialogOpen}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Cancel Test Drive</DialogTitle>
+              <DialogTitle>Cancel Booking</DialogTitle>
               <DialogDescription>
-                Are you sure you want to cancel your test drive for the{" "}
+                Are you sure you want to cancel your booking for the{" "}
                 {booking.car.year} {booking.car.make} {booking.car.model}? This
                 action cannot be undone.
               </DialogDescription>
@@ -190,7 +190,7 @@ export function TestDriveCard({
                     {format(
                       new Date(booking.bookingDate),
                       "EEEE, MMMM d, yyyy"
-                    )}
+                    )} 
                   </span>
                 </div>
                 <div className="flex justify-between">

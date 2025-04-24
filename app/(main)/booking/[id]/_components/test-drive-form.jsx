@@ -43,11 +43,11 @@ import useFetch from "@/hooks/use-fetch";
 // Define Zod schema for form validation
 const testDriveSchema = z.object({
   date: z.date({
-    required_error: "Please select a date for your test drive",
+    required_error: "Please select a date for your renting",
   }),
 
   endDate: z.date({
-    required_error: "Please select a date for your test drive",
+    required_error: "Please select a date for your renting",
   }),
   timeSlot: z.string({
     required_error: "Please select a time slot",
@@ -480,7 +480,7 @@ export function TestDriveForm({ car, testDriveInfo }) {
                 {bookingInProgress ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Booking Your Test Drive...
+                    Booking Your Car...
                   </>
                 ) : (
                   "Book Now"

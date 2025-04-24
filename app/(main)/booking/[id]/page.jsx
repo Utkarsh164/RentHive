@@ -5,7 +5,7 @@ import { TestDriveForm } from "./_components/test-drive-form";
 export async function generateMetadata() {
   return {
     title: `Book Your Drive | RentHive`,
-    description: `Schedule a test drive in few seconds`,
+    description: `Rent in few seconds`,
   };
 }
 
