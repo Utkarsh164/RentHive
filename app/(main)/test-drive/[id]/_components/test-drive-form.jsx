@@ -122,7 +122,7 @@ export function TestDriveForm({ car, testDriveInfo }) {
   useEffect(() => {
     if (bookingError) {
       toast.error(
-        bookingError.message || "Failed to book test drive. Please try again."
+        bookingError.message || "Failed to book. Please try again."
       );
     }
   }, [bookingError]);
@@ -260,7 +260,7 @@ export function TestDriveForm({ car, testDriveInfo }) {
             </h3>
 
             <div className="mt-2 text-xl font-bold text-blue-600">
-              ${car.price.toLocaleString()}
+            ₹{car.price.toLocaleString()}
             </div>
 
             <div className="mt-4 text-sm text-gray-500">
@@ -296,7 +296,7 @@ export function TestDriveForm({ car, testDriveInfo }) {
             <h2 className="text-xl font-bold mb-4">Dealership Info</h2>
             <div className="text-sm">
               <p className="font-medium">
-                {dealership?.name || "Vehiql Motors"}
+                {"RentHive Motors"}
               </p>
               <p className="text-gray-600 mt-1">
                 {dealership?.address || "Address not available"}
@@ -307,7 +307,7 @@ export function TestDriveForm({ car, testDriveInfo }) {
               </p>
               <p className="text-gray-600">
                 <span className="font-medium">Email:</span>{" "}
-                {dealership?.email || "Not available"}
+                {"contact@renthive.com" || "Not available"}
               </p>
             </div>
           </CardContent>
@@ -318,7 +318,7 @@ export function TestDriveForm({ car, testDriveInfo }) {
       <div className="md:col-span-2">
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-xl font-bold mb-6">Schedule Your Test Drive</h2>
+            <h2 className="text-xl font-bold mb-6">Schedule Your Booking</h2>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                           {/* Date Selection - Start Date */}
@@ -464,7 +464,7 @@ export function TestDriveForm({ car, testDriveInfo }) {
                   render={({ field }) => (
                     <Textarea
                       {...field}
-                      placeholder="Any specific questions or requests for your test drive?"
+                      placeholder="Any specific questions or requests for renting car?"
                       className="min-h-24"
                     />
                   )}
@@ -483,14 +483,14 @@ export function TestDriveForm({ car, testDriveInfo }) {
                     Booking Your Test Drive...
                   </>
                 ) : (
-                  "Book Test Drive"
+                  "Book Now"
                 )}
               </Button>
             </form>
 
             {/* Instructions */}
             <div className="mt-8 bg-gray-50 p-4 rounded-lg">
-              <h3 className="font-medium mb-2">What to expect</h3>
+              <h3 className="font-medium mb-2">Terms & Conditions</h3>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex items-start">
                   <CheckCircle2 className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
@@ -498,11 +498,14 @@ export function TestDriveForm({ car, testDriveInfo }) {
                 </li>
                 <li className="flex items-start">
                   <CheckCircle2 className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
-                  Test drives typically last 30-60 minutes
+                  Verification typically last 10-15 minutes
                 </li>
                 <li className="flex items-start">
                   <CheckCircle2 className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
-                  A dealership representative will accompany you
+                  In case of any damage, you will be liable for repair costs.                </li>
+                <li className="flex items-start">
+                  <CheckCircle2 className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
+                  Attach address details for home delivery
                 </li>
               </ul>
             </div>
@@ -516,10 +519,10 @@ export function TestDriveForm({ car, testDriveInfo }) {
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5 text-green-500" />
-              Test Drive Booked Successfully
+              Booked Successfully
             </DialogTitle>
             <DialogDescription>
-              Your test drive has been confirmed with the following details:
+              Booking has been confirmed with the following details:
             </DialogDescription>
           </DialogHeader>
                     {bookingDetails && (
@@ -545,12 +548,12 @@ export function TestDriveForm({ car, testDriveInfo }) {
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium">Dealership:</span>
-                  <span>{dealership?.name || "Vehiql Motors"}</span>
+                  <span>{dealership?.name || "RentHive Motors"}</span>
                 </div>
               </div>
 
               <div className="mt-4 bg-blue-50 p-3 rounded text-sm text-blue-700">
-                Please arrive 10 minutes early with your driver's license.
+                Please arrive with your driver's license.
               </div>
             </div>
           )}

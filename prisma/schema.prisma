@@ -143,7 +143,9 @@ model TestDriveBooking {
   userId          String
   user            User          @relation(fields: [userId], references: [id])
   bookingDate     DateTime      @db.Date           // Start date of the booking
-  bookingEndDate  DateTime?     @db.Date           // Optional end date for range bookings
+  bookingEndDate  DateTime?     @db.Date           // End date for range bookings
+  startTime       String?        // Format: "HH:MM" (24-hour)
+  endTime         String?        // Format: "HH:MM" (24-hour)
   status          BookingStatus @default(PENDING)
   notes           String?
   createdAt       DateTime      @default(now())

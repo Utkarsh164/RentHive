@@ -150,12 +150,7 @@ export const CarsList = () => {
             Unavailable
           </Badge>
         );
-      case "SOLD":
-        return (
-          <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">
-            Sold
-          </Badge>
-        );
+     
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
@@ -292,12 +287,12 @@ export const CarsList = () => {
                             >
                               Set Unavailable
                             </DropdownMenuItem>
-                            <DropdownMenuItem
+                            {/* <DropdownMenuItem
                               onClick={() => handleStatusUpdate(car, "SOLD")}
                               disabled={car.status === "SOLD" || updatingCar}
                             >
                               Mark as Sold
-                            </DropdownMenuItem>
+                            </DropdownMenuItem> */}
                             <DropdownMenuSeparator />
                             <DropdownMenuItem
                               className="text-red-600"

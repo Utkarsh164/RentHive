@@ -43,7 +43,7 @@ export function Dashboard({ initialData }) {
       >
         <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="test-drives">Test Drives</TabsTrigger>
+          <TabsTrigger value="test-drives">Bookings</TabsTrigger>
         </TabsList>
 
         {/* Overview Tab */}
@@ -60,14 +60,14 @@ export function Dashboard({ initialData }) {
               <CardContent>
                 <div className="text-2xl font-bold">{cars.total}</div>
                 <p className="text-xs text-muted-foreground">
-                  {cars.available} available, {cars.sold} sold
+                  {cars.available} available, {cars.unavailable} unavailable
                 </p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
-                  Test Drives
+                  Bookings
                 </CardTitle>
                 <Calendar className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
@@ -78,7 +78,9 @@ export function Dashboard({ initialData }) {
                 </p>
               </CardContent>
             </Card>
-            <Card>
+
+
+            {/* <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
                   Conversion Rate
@@ -105,7 +107,7 @@ export function Dashboard({ initialData }) {
                   {((cars.sold / cars.total) * 100).toFixed(1)}% of inventory
                 </p>
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
 
           {/* Additional Overview Content */}
@@ -138,7 +140,7 @@ export function Dashboard({ initialData }) {
 
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <h3 className="font-medium text-sm mb-2">
-                      Test Drive Success
+                      Renting Success
                     </h3>
                     <div className="flex items-center">
                       <div className="w-full bg-gray-200 rounded-full h-2.5">
@@ -161,7 +163,7 @@ export function Dashboard({ initialData }) {
                       </span>
                     </div>
                     <p className="text-xs text-gray-500 mt-2">
-                      Completed test drives
+                      Completed Renting
                     </p>
                   </div>
                 </div>
@@ -169,16 +171,16 @@ export function Dashboard({ initialData }) {
                 <div className="grid grid-cols-3 gap-4 mt-6">
                   <div className="text-center">
                     <span className="text-3xl font-bold text-blue-600">
-                      {cars.sold}
+                      {cars.unavailable}
                     </span>
-                    <p className="text-sm text-gray-600 mt-1">Cars Sold</p>
+                    <p className="text-sm text-gray-600 mt-1">Cars Unavailable</p>
                   </div>
                   <div className="text-center">
                     <span className="text-3xl font-bold text-amber-600">
                       {testDrives.pending + testDrives.confirmed}
                     </span>
                     <p className="text-sm text-gray-600 mt-1">
-                      Upcoming Test Drives
+                      Upcoming Booking
                     </p>
                   </div>
                   <div className="text-center">
@@ -266,13 +268,13 @@ export function Dashboard({ initialData }) {
           {/* Test Drive Status Visualization */}
           <Card>
             <CardHeader>
-              <CardTitle>Test Drive Statistics</CardTitle>
+              <CardTitle>Booking Statistics</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
                 <div className="grid grid-cols-2 gap-6">
                   {/* Conversion Rate Card */}
-                  <div className="bg-gray-50 rounded-lg p-4">
+                  {/* <div className="bg-gray-50 rounded-lg p-4">
                     <h3 className="text-lg font-medium mb-2">
                       Conversion Rate
                     </h3>
@@ -282,7 +284,7 @@ export function Dashboard({ initialData }) {
                     <p className="text-sm text-gray-600 mt-1">
                       Test drives resulting in car purchases
                     </p>
-                  </div>
+                  </div> */}
 
                   {/* Test Drive Success Rate */}
                   <div className="bg-gray-50 rounded-lg p-4">
@@ -299,7 +301,7 @@ export function Dashboard({ initialData }) {
                       %
                     </div>
                     <p className="text-sm text-gray-600 mt-1">
-                      Test drives successfully completed
+                      Successfully completed Rentings
                     </p>
                   </div>
                 </div>

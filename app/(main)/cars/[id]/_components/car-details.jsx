@@ -192,7 +192,7 @@ export function CarDetails({ car, testDriveInfo }) {
           </h1>
 
           <div className="text-2xl font-bold text-blue-600">
-            {formatCurrency(car.price)}
+            {formatCurrency(car.price)}/ Day
           </div>
 
           {/* Quick Stats */}
@@ -211,7 +211,7 @@ export function CarDetails({ car, testDriveInfo }) {
             </div>
           </div>
 
-          <Dialog>
+          {/* <Dialog>
             <DialogTrigger className="w-full text-start">
               <Card className="pt-5">
                 <CardContent>
@@ -238,7 +238,7 @@ export function CarDetails({ car, testDriveInfo }) {
                 <EmiCalculator price={car.price} />
               </DialogHeader>
             </DialogContent>
-          </Dialog>
+          </Dialog> */}
 
           {/* Request More Info */}
           <Card className="my-6">
@@ -281,7 +281,7 @@ export function CarDetails({ car, testDriveInfo }) {
                     new Date(testDriveInfo.userTestDrive.bookingDate),
                     "EEEE, MMMM d, yyyy"
                   )}`
-                : "Book Test Drive"}
+                : "Book Now"}
             </Button>
           )}
         </div>
@@ -293,7 +293,8 @@ export function CarDetails({ car, testDriveInfo }) {
           <div>
             <h3 className="text-2xl font-bold mb-6">Description</h3>
             <p className="whitespace-pre-line text-gray-700">
-              {car.description}
+              {car.description} <br /><br/>
+              Security Deposit of {formatCurrency(car.price)}
             </p>
           </div>
           <div>
@@ -384,7 +385,7 @@ export function CarDetails({ car, testDriveInfo }) {
             <div className="flex items-start gap-3">
               <LocateFixed className="h-5 w-5 text-blue-600 mt-1 flex-shrink-0" />
               <div>
-                <h4 className="font-medium">Vehiql Motors</h4>
+                <h4 className="font-medium">RentHive Motors</h4>
                 <p className="text-gray-600">
                   {testDriveInfo.dealership?.address || "Not Available"}
                 </p>
@@ -392,7 +393,7 @@ export function CarDetails({ car, testDriveInfo }) {
                   Phone: {testDriveInfo.dealership?.phone || "Not Available"}
                 </p>
                 <p className="text-gray-600">
-                  Email: {testDriveInfo.dealership?.email || "Not Available"}
+                  Email: {"contact@renthive.com" || "Not Available"}
                 </p>
               </div>
             </div>

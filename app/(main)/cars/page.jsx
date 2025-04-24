@@ -3,8 +3,8 @@ import { getCarFilters } from "@/actions/car-listing";
 import { CarListings } from "./_components/cars-listing";
 
 export const metadata = {
-  title: "Cars | Vehiql",
-  description: "Browse and search for your dream car",
+  title: "Cars | RentHive",
+  description: "Browse and search cars",
 };
 
 export default async function CarsPage() {

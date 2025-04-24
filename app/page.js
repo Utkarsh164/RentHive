@@ -24,10 +24,10 @@ export default async function Home() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-8">
             <h1 className="text-5xl md:text-8xl mb-4 gradient-title">
-              Find your Dream Car with Vehiql AI
+              Rent your Dream Car with RentHive
             </h1>
             <p className="text-xl text-gray-500 mb-8 max-w-2xl mx-auto">
-              Advanced AI Car Search and test drive from thousands of vehicles.
+              Advanced AI Car Search from thousands of vehicles.
             </p>
           </div>
 
@@ -111,9 +111,9 @@ export default async function Home() {
               <div className="bg-blue-100 text-blue-700 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
                 <Calendar className="h-8 w-8" />
               </div>
-              <h3 className="text-xl font-bold mb-2">Easy Test Drive</h3>
+              <h3 className="text-xl font-bold mb-2">Easy Booking</h3>
               <p className="text-gray-600">
-                Book a test drive online in minutes, with flexible scheduling
+              Easy booking in minutes, with flexible scheduling
                 options.
               </p>
             </div>

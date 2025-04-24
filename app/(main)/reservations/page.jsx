@@ -4,8 +4,8 @@ import { redirect } from "next/navigation";
 import { ReservationsList } from "./_components/reservations-list";
 
 export const metadata = {
-  title: "My Reservations | Vehiql",
-  description: "Manage your test drive reservations",
+  title: "My Reservations | RentHive",
+  description: "Manage your drive reservations",
 };
 
 export default async function ReservationsPage() {

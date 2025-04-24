@@ -59,24 +59,24 @@ export const TestDrivesList = () => {
   // Handle errors
   useEffect(() => {
     if (testDrivesError) {
-      toast.error("Failed to load test drives");
+      toast.error("Failed to load");
     }
     if (updateError) {
-      toast.error("Failed to update test drive status");
+      toast.error("Failed to update status");
     }
     if (cancelError) {
-      toast.error("Failed to cancel test drive");
+      toast.error("Failed to cancel");
     }
   }, [testDrivesError, updateError, cancelError]);
 
   // Handle successful operations
   useEffect(() => {
     if (updateResult?.success) {
-      toast.success("Test drive status updated successfully");
+      toast.success("Booking status updated successfully");
       fetchTestDrives({ search, status: statusFilter });
     }
     if (cancelResult?.success) {
-      toast.success("Test drive cancelled successfully");
+      toast.success("Booking cancelled successfully");
       fetchTestDrives({ search, status: statusFilter });
     }
   }, [updateResult, cancelResult]);
@@ -147,10 +147,10 @@ export const TestDrivesList = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <CalendarRange className="h-5 w-5" />
-            Test Drive Bookings
+            All Bookings
           </CardTitle>
           <CardDescription>
-            Manage all test drive reservations and update their status
+            Manage all reservations and update their status
           </CardDescription>
         </CardHeader>
 
@@ -164,19 +164,19 @@ export const TestDrivesList = () => {
               <AlertCircle className="h-4 w-4" />
               <AlertTitle>Error</AlertTitle>
               <AlertDescription>
-                Failed to load test drives. Please try again.
+                Failed to load. Please try again.
               </AlertDescription>
             </Alert>
           ) : testDrivesData?.data?.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
               <CalendarRange className="h-12 w-12 text-gray-300 mb-4" />
               <h3 className="text-lg font-medium text-gray-900 mb-1">
-                No test drives found
+                No booking found
               </h3>
               <p className="text-gray-500 mb-4">
                 {statusFilter || search
-                  ? "No test drives match your search criteria"
-                  : "There are no test drive bookings yet."}
+                  ? "No booking match your search criteria"
+                  : "There are no bookings yet."}
               </p>
             </div>
           ) : (
