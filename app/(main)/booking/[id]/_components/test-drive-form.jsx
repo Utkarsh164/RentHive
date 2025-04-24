@@ -392,7 +392,7 @@ export function TestDriveForm({ car, testDriveInfo }) {
                         mode="single"
                         selected={field.value}
                         onSelect={field.onChange}
-                        disabled={!isDayDisabled}
+                        disabled={isDayDisabled}
                         initialFocus
                       />
                     </PopoverContent>
