@@ -71,7 +71,6 @@ export async function processCarImageWithAI(file) {
       For confidence, provide a value between 0 and 1 representing how confident you are in your overall identification.
       Only respond with the JSON object, nothing else.
     `;
-
     // Get response from Gemini
     const result = await model.generateContent([imagePart, prompt]);
     const response = await result.response;
@@ -105,6 +104,17 @@ export async function processCarImageWithAI(file) {
         throw new Error(
           `AI response missing required fields: ${missingFields.join(", ")}`
         );
+      }
+
+
+      ///le dekhio
+      if (carDetails.confidence === 0.0||carDetails.confidence === 0) {
+        //throw new Error("please upload clear car image");
+        console.log("it worked")
+        return {
+          success: false,
+          data: "please upload clear car image",
+        };
       }
 
       // Return success response with data

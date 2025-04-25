@@ -723,9 +723,9 @@ export const AddCarForm = () => {
                     <Loader2 className="animate-spin h-5 w-5 mr-2" />
                     <div>
                       <p className="font-medium">Analyzing image...</p>
-                      <p className="text-sm">
+                      {/* <p className="text-sm">
                         Gemini AI is extracting car details
-                      </p>
+                      </p> */}
                     </div>
                   </div>
                 )}

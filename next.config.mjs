@@ -2,6 +2,9 @@
 const nextConfig = {
   experimental: {
     serverComponentsHmrCache: false, // defaults to true
+    serverActions: {
+      bodySizeLimit: '5mb' // ⬅️ Added this line to increase the body size limit
+    }
   },
   images: {
     remotePatterns: [
