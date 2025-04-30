@@ -98,7 +98,6 @@ export function CarDetails({ car, testDriveInfo }) {
     toast.success("Link copied to clipboard");
   };
 
-  // Handle book test drive
   const handleBookTestDrive = () => {
     if (!isSignedIn) {
       toast.error("Please sign in to book a car");
@@ -211,36 +210,6 @@ export function CarDetails({ car, testDriveInfo }) {
             </div>
           </div>
 
-          {/* <Dialog>
-            <DialogTrigger className="w-full text-start">
-              <Card className="pt-5">
-                <CardContent>
-                  <div className="flex items-center gap-2 text-lg font-medium mb-2">
-                    <Currency className="h-5 w-5 text-blue-600" />
-                    <h3>EMI Calculator</h3>
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    Estimated Monthly Payment:{" "}
-                    <span className="font-bold text-gray-900">
-                      {formatCurrency(car.price / 60)}
-                    </span>{" "}
-                    for 60 months
-                  </div>
-                  <div className="text-xs text-gray-500 mt-1">
-                    *Based on $0 down payment and 4.5% interest rate
-                  </div>
-                </CardContent>
-              </Card>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Vehiql Car Loan Calculator</DialogTitle>
-                <EmiCalculator price={car.price} />
-              </DialogHeader>
-            </DialogContent>
-          </Dialog> */}
-
-          {/* Request More Info */}
           <Card className="my-6">
             <CardContent className="p-4">
               <div className="flex items-center gap-2 text-lg font-medium mb-2">
@@ -251,7 +220,7 @@ export function CarDetails({ car, testDriveInfo }) {
                 Our representatives are available to answer all your queries
                 about this vehicle.
               </p>
-              <a href="mailto:help@vehiql.in">
+              <a href="mailto:help@renhive.in">
                 <Button variant="outline" className="w-full">
                   Request Info
                 </Button>
