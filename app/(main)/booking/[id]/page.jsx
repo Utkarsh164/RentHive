@@ -1,6 +1,6 @@
 import { getCarById } from "@/actions/car-listing";
 import { notFound } from "next/navigation";
-import { TestDriveForm } from "./_components/test-drive-form";
+import { BookingForm } from "./_components/Booking-form";
 
 export async function generateMetadata() {
   return {
@@ -22,7 +22,7 @@ export default async function TestDrivePage({ params }) {
   return (
     <div className="container mx-auto px-4 py-12">
       <h1 className="text-6xl mb-6 gradient-title">Rent car</h1>
-      <TestDriveForm
+      <BookingForm
         car={result.data}
         testDriveInfo={result.data.testDriveInfo}
       />

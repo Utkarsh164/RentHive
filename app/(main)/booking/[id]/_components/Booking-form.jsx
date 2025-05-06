@@ -55,7 +55,7 @@ const testDriveSchema = z.object({
   notes: z.string().optional(),
 });
 
-export function TestDriveForm({ car, testDriveInfo }) {
+export function BookingForm({ car, testDriveInfo }) {
   const router = useRouter();
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
