@@ -82,13 +82,11 @@ export function BookingForm({ car, testDriveInfo }) {
   const dealership = testDriveInfo?.dealership;
   const existingBookings = testDriveInfo?.existingBookings || [];
   
-  // Watch date field to update available time slots
-  // const selectedRange = watch("dateRange");
-  // const selectedDate = selectedRange?.from; // use start date for slot checking
+ 
 
   const selectedDate = watch("date");
   
-  // Custom hooks for API calls
+ 
   const {
     loading: bookingInProgress,
     fn: bookTestDriveFn,
@@ -503,10 +501,7 @@ export function BookingForm({ car, testDriveInfo }) {
                 <li className="flex items-start">
                   <CheckCircle2 className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
                   In case of any damage, you will be liable for repair costs.                </li>
-                <li className="flex items-start">
-                  <CheckCircle2 className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
-                  Attach address details for home delivery
-                </li>
+                
               </ul>
             </div>
           </CardContent>

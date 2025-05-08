@@ -5,12 +5,9 @@ import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
-/**
- * Get simplified filters for the car marketplace
- */
+
 export async function getCarFilters() {
   try {
-    // Get unique makes
     const makes = await db.car.findMany({
       where: { status: "AVAILABLE" },
       select: { make: true },
@@ -18,7 +15,6 @@ export async function getCarFilters() {
       orderBy: { make: "asc" },
     });
 
-    // Get unique body types
     const bodyTypes = await db.car.findMany({
       where: { status: "AVAILABLE" },
       select: { bodyType: true },
@@ -26,7 +22,7 @@ export async function getCarFilters() {
       orderBy: { bodyType: "asc" },
     });
 
-    // Get unique fuel types
+    
     const fuelTypes = await db.car.findMany({
       where: { status: "AVAILABLE" },
       select: { fuelType: true },
@@ -34,7 +30,7 @@ export async function getCarFilters() {
       orderBy: { fuelType: "asc" },
     });
 
-    // Get unique transmissions
+    
     const transmissions = await db.car.findMany({
       where: { status: "AVAILABLE" },
       select: { transmission: true },
@@ -42,7 +38,7 @@ export async function getCarFilters() {
       orderBy: { transmission: "asc" },
     });
 
-    // Get min and max prices using Prisma aggregations
+    
     const priceAggregations = await db.car.aggregate({
       where: { status: "AVAILABLE" },
       _min: { price: true },
@@ -71,9 +67,7 @@ export async function getCarFilters() {
   }
 }
 
-/**
- * Get cars with simplified filters
- */
+
 export async function getCars({
   search = "",
   make = "",
@@ -82,12 +76,11 @@ export async function getCars({
   transmission = "",
   minPrice = 0,
   maxPrice = Number.MAX_SAFE_INTEGER,
-  sortBy = "newest", // Options: newest, priceAsc, priceDesc
+  sortBy = "newest", 
   page = 1,
   limit = 6,
 }) {
   try {
-    // Get current user if authenticated
     const { userId } = await auth();
     let dbUser = null;
 
@@ -97,7 +90,6 @@ export async function getCars({
       });
     }
 
-    // Build where conditions
     let where = {
       status: "AVAILABLE",
     };
@@ -116,7 +108,6 @@ export async function getCars({
     if (transmission)
       where.transmission = { equals: transmission, mode: "insensitive" };
 
-    // Add price range
     where.price = {
       gte: parseFloat(minPrice) || 0,
     };
@@ -125,10 +116,8 @@ export async function getCars({
       where.price.lte = parseFloat(maxPrice);
     }
 
-    // Calculate pagination
     const skip = (page - 1) * limit;
 
-    // Determine sort order
     let orderBy = {};
     switch (sortBy) {
       case "priceAsc":
@@ -143,10 +132,8 @@ export async function getCars({
         break;
     }
 
-    // Get total count for pagination
     const totalCars = await db.car.count({ where });
 
-    // Execute the main query
     const cars = await db.car.findMany({
       where,
       take: limit,
@@ -154,7 +141,6 @@ export async function getCars({
       orderBy,
     });
 
-    // If we have a user, check which cars are wishlisted
     let wishlisted = new Set();
     if (dbUser) {
       const savedCars = await db.userSavedCar.findMany({
@@ -165,7 +151,7 @@ export async function getCars({
       wishlisted = new Set(savedCars.map((saved) => saved.carId));
     }
 
-    // Serialize and check wishlist status
+   
     const serializedCars = cars.map((car) =>
       serializeCarData(car, wishlisted.has(car.id))
     );
@@ -185,9 +171,7 @@ export async function getCars({
   }
 }
 
-/**
- * Toggle car in user's wishlist
- */
+
 export async function toggleSavedCar(carId) {
   try {
     const { userId } = await auth();
@@ -199,7 +183,6 @@ export async function toggleSavedCar(carId) {
 
     if (!user) throw new Error("User not found");
 
-    // Check if car exists
     const car = await db.car.findUnique({
       where: { id: carId },
     });
@@ -211,7 +194,6 @@ export async function toggleSavedCar(carId) {
       };
     }
 
-    // Check if car is already saved
     const existingSave = await db.userSavedCar.findUnique({
       where: {
         userId_carId: {
@@ -221,7 +203,6 @@ export async function toggleSavedCar(carId) {
       },
     });
 
-    // If car is already saved, remove it
     if (existingSave) {
       await db.userSavedCar.delete({
         where: {
@@ -240,7 +221,6 @@ export async function toggleSavedCar(carId) {
       };
     }
 
-    // If car is not saved, add it
     await db.userSavedCar.create({
       data: {
         userId: user.id,
@@ -259,12 +239,9 @@ export async function toggleSavedCar(carId) {
   }
 }
 
-/**
- * Get car details by ID
- */
+
 export async function getCarById(carId) {
   try {
-    // Get current user if authenticated
     const { userId } = await auth();
     let dbUser = null;
 
@@ -274,7 +251,6 @@ export async function getCarById(carId) {
       });
     }
 
-    // Get car details
     const car = await db.car.findUnique({
       where: { id: carId },
     });
@@ -286,7 +262,6 @@ export async function getCarById(carId) {
       };
     }
 
-    // Check if car is wishlisted by user
     let isWishlisted = false;
     if (dbUser) {
       const savedCar = await db.userSavedCar.findUnique({
@@ -301,7 +276,6 @@ export async function getCarById(carId) {
       isWishlisted = !!savedCar;
     }
 
-    // Check if user has already booked a test drive for this car
     const existingTestDrive = await db.testDriveBooking.findFirst({
       where: {
         carId,
@@ -323,7 +297,6 @@ export async function getCarById(carId) {
       };
     }
 
-    // Get dealership info for test drive availability
     const dealership = await db.dealershipInfo.findFirst({
       include: {
         workingHours: true,
@@ -356,9 +329,7 @@ export async function getCarById(carId) {
   }
 }
 
-/**
- * Get user's saved cars
- */
+
 export async function getSavedCars() {
   try {
     const { userId } = await auth();
@@ -369,7 +340,6 @@ export async function getSavedCars() {
       };
     }
 
-    // Get the user from our database
     const user = await db.user.findUnique({
       where: { clerkUserId: userId },
     });
@@ -381,7 +351,6 @@ export async function getSavedCars() {
       };
     }
 
-    // Get saved cars with their details
     const savedCars = await db.userSavedCar.findMany({
       where: { userId: user.id },
       include: {
@@ -390,7 +359,6 @@ export async function getSavedCars() {
       orderBy: { savedAt: "desc" },
     });
 
-    // Extract and format car data
     const cars = savedCars.map((saved) => serializeCarData(saved.car));
 
     return {

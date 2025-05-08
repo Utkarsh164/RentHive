@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 export default async function AdminDashboardPage() {
-  // Fetch dashboard data
+  
   const dashboardData = await getDashboardData();
 
   return (

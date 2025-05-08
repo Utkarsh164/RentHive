@@ -9,13 +9,13 @@ export const metadata = {
 };
 
 export default async function ReservationsPage() {
-  // Check authentication on server
+  
   const { userId } = await auth();
   if (!userId) {
     redirect("/sign-in?redirect=/reservations");
   }
 
-  // Fetch reservations on the server
+ 
   const reservationsResult = await getUserTestDrives();
 
   return (

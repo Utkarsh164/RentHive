@@ -50,7 +50,6 @@ import {
   updateUserRole,
 } from "@/actions/settings";
 
-// Day names for display
 const DAYS = [
   { value: "MONDAY", label: "Monday" },
   { value: "TUESDAY", label: "Tuesday" },
@@ -77,7 +76,7 @@ export const SettingsForm = () => {
   const [confirmRemoveDialog, setConfirmRemoveDialog] = useState(false);
   const [userToDemote, setUserToDemote] = useState(null);
 
-  // Custom hooks for API calls
+ 
   const {
     loading: fetchingSettings,
     fn: fetchDealershipInfo,
@@ -106,21 +105,21 @@ export const SettingsForm = () => {
     error: updateRoleError,
   } = useFetch(updateUserRole);
 
-  // Fetch settings and users on component mount
+ 
   useEffect(() => {
     fetchDealershipInfo();
     fetchUsers();
   }, []);
 
-  // Set working hours when settings data is fetched
+ 
   useEffect(() => {
     if (settingsData?.success && settingsData.data) {
       const dealership = settingsData.data;
 
-      // Map the working hours
+      
       if (dealership.workingHours.length > 0) {
         const mappedHours = DAYS.map((day) => {
-          // Find matching working hour
+         
           const hourData = dealership.workingHours.find(
             (h) => h.dayOfWeek === day.value
           );
@@ -182,7 +181,7 @@ export const SettingsForm = () => {
     }
   }, [saveResult, updateRoleResult]);
 
-  // Handle working hours change
+  
   const handleWorkingHourChange = (index, field, value) => {
     const updatedHours = [...workingHours];
     updatedHours[index] = {
@@ -192,24 +191,24 @@ export const SettingsForm = () => {
     setWorkingHours(updatedHours);
   };
 
-  // Save working hours
+ 
   const handleSaveHours = async () => {
     await saveHours(workingHours);
   };
 
-  // Make user admin
+ 
   const handleMakeAdmin = async () => {
     if (!userToPromote) return;
     await updateRole(userToPromote.id, "ADMIN");
   };
 
-  // Remove admin privileges
+  
   const handleRemoveAdmin = async () => {
     if (!userToDemote) return;
     await updateRole(userToDemote.id, "USER");
   };
 
-  // Filter users by search term
+
   const filteredUsers = usersData?.success
     ? usersData.data.filter(
         (user) =>

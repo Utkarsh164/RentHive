@@ -6,7 +6,7 @@ import { CarCard } from "@/components/car-card";
 import { Heart } from "lucide-react";
 
 export function SavedCarsList({ initialData }) {
-  // No saved cars
+  
   if (!initialData?.data || initialData?.data.length === 0) {
     return (
       <div className="min-h-[400px] flex flex-col items-center justify-center text-center p-8 border rounded-lg bg-gray-50">

@@ -14,12 +14,11 @@ export function ReservationsList({ initialData }) {
     error: cancelError,
   } = useFetch(cancelTestDrive);
 
-  // Handle cancellation
+  
   const handleCancelBooking = async (bookingId) => {
     await cancelBookingFn(bookingId);
   };
 
-  // Group bookings by status
   const upcomingBookings = initialData?.data?.filter((booking) =>
     ["PENDING", "CONFIRMED"].includes(booking.status)
   );
@@ -28,7 +27,6 @@ export function ReservationsList({ initialData }) {
     ["COMPLETED", "CANCELLED", "NO_SHOW"].includes(booking.status)
   );
 
-  // No reservations
   if (initialData?.data?.length === 0) {
     return (
       <div className="min-h-[400px] flex flex-col items-center justify-center text-center p-8 border rounded-lg bg-gray-50">

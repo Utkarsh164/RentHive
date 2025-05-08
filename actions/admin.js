@@ -13,7 +13,7 @@ export async function getAdmin() {
     where: { clerkUserId: userId },
   });
 
-  // If user not found in our db or not an admin, return not authorized
+  
   if (!user || user.role !== "ADMIN") {
     return { authorized: false, reason: "not-admin" };
   }
@@ -21,15 +21,13 @@ export async function getAdmin() {
   return { authorized: true, user };
 }
 
-/**
- * Get all test drives for admin with filters
- */
+
 export async function getAdminTestDrives({ search = "", status = "" }) {
   try {
     const { userId } = await auth();
     if (!userId) throw new Error("Unauthorized");
 
-    // Verify admin status
+   
     const user = await db.user.findUnique({
       where: { clerkUserId: userId },
     });
@@ -38,15 +36,14 @@ export async function getAdminTestDrives({ search = "", status = "" }) {
       throw new Error("Unauthorized access");
     }
 
-    // Build where conditions
+    
     let where = {};
 
-    // Add status filter
+    
     if (status) {
       where.status = status;
     }
 
-    // Add search filter
     if (search) {
       where.OR = [
         {
@@ -68,7 +65,7 @@ export async function getAdminTestDrives({ search = "", status = "" }) {
       ];
     }
 
-    // Get bookings
+    
     const bookings = await db.testDriveBooking.findMany({
       where,
       include: {
@@ -86,7 +83,7 @@ export async function getAdminTestDrives({ search = "", status = "" }) {
       orderBy: [{ bookingDate: "desc" }, { startTime: "asc" }],
     });
 
-    // Format the bookings
+    
     const formattedBookings = bookings.map((booking) => ({
       id: booking.id,
       carId: booking.carId,
@@ -116,15 +113,13 @@ export async function getAdminTestDrives({ search = "", status = "" }) {
   }
 }
 
-/**
- * Update test drive status
- */
+
 export async function updateTestDriveStatus(bookingId, newStatus) {
   try {
     const { userId } = await auth();
     if (!userId) throw new Error("Unauthorized");
 
-    // Verify admin status
+    
     const user = await db.user.findUnique({
       where: { clerkUserId: userId },
     });
@@ -133,7 +128,7 @@ export async function updateTestDriveStatus(bookingId, newStatus) {
       throw new Error("Unauthorized access");
     }
 
-    // Get the booking
+    
     const booking = await db.testDriveBooking.findUnique({
       where: { id: bookingId },
     });
@@ -142,7 +137,7 @@ export async function updateTestDriveStatus(bookingId, newStatus) {
       throw new Error("Booking not found");
     }
 
-    // Validate status
+    
     const validStatuses = [
       "PENDING",
       "CONFIRMED",
@@ -157,13 +152,12 @@ export async function updateTestDriveStatus(bookingId, newStatus) {
       };
     }
 
-    // Update status
     await db.testDriveBooking.update({
       where: { id: bookingId },
       data: { status: newStatus },
     });
 
-    // Revalidate paths
+    
     revalidatePath("/admin/test-drives");
     revalidatePath("/reservations");
 
@@ -181,7 +175,6 @@ export async function getDashboardData() {
     const { userId } = await auth();
     if (!userId) throw new Error("Unauthorized");
 
-    // Get user
     const user = await db.user.findUnique({
       where: { clerkUserId: userId },
     });
@@ -193,9 +186,8 @@ export async function getDashboardData() {
       };
     }
 
-    // Fetch all necessary data in a single parallel operation
+    
     const [cars, testDrives] = await Promise.all([
-      // Get all cars with minimal fields
       db.car.findMany({
         select: {
           id: true,
@@ -204,7 +196,6 @@ export async function getDashboardData() {
         },
       }),
 
-      // Get all test drives with minimal fields
       db.testDriveBooking.findMany({
         select: {
           id: true,
@@ -214,7 +205,7 @@ export async function getDashboardData() {
       }),
     ]);
 
-    // Calculate car statistics
+    
     const totalCars = cars.length;
     const availableCars = cars.filter(
       (car) => car.status === "AVAILABLE"
@@ -225,7 +216,7 @@ export async function getDashboardData() {
     ).length;
     const featuredCars = cars.filter((car) => car.featured === true).length;
 
-    // Calculate test drive statistics
+   
     const totalTestDrives = testDrives.length;
     const pendingTestDrives = testDrives.filter(
       (td) => td.status === "PENDING"
@@ -243,7 +234,7 @@ export async function getDashboardData() {
       (td) => td.status === "NO_SHOW"
     ).length;
 
-    // Calculate test drive conversion rate
+    
     const completedTestDriveCarIds = testDrives
       .filter((td) => td.status === "COMPLETED")
       .map((td) => td.carId);

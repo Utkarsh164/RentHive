@@ -80,37 +80,9 @@ export function Dashboard({ initialData }) {
             </Card>
 
 
-            {/* <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Conversion Rate
-                </CardTitle>
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {testDrives.conversionRate}%
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  From test drives to sales
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Cars Sold</CardTitle>
-                <DollarSign className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{cars.sold}</div>
-                <p className="text-xs text-muted-foreground">
-                  {((cars.sold / cars.total) * 100).toFixed(1)}% of inventory
-                </p>
-              </CardContent>
-            </Card> */}
           </div>
 
-          {/* Additional Overview Content */}
+          
           <Card>
             <CardHeader>
               <CardTitle>Dealership Summary</CardTitle>
@@ -273,20 +245,7 @@ export function Dashboard({ initialData }) {
             <CardContent>
               <div className="space-y-6">
                 <div className="grid grid-cols-2 gap-6">
-                  {/* Conversion Rate Card */}
-                  {/* <div className="bg-gray-50 rounded-lg p-4">
-                    <h3 className="text-lg font-medium mb-2">
-                      Conversion Rate
-                    </h3>
-                    <div className="text-3xl font-bold text-blue-600">
-                      {testDrives.conversionRate}%
-                    </div>
-                    <p className="text-sm text-gray-600 mt-1">
-                      Test drives resulting in car purchases
-                    </p>
-                  </div> */}
-
-                  {/* Test Drive Success Rate */}
+                 
                   <div className="bg-gray-50 rounded-lg p-4">
                     <h3 className="text-lg font-medium mb-2">
                       Completion Rate

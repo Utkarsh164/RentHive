@@ -178,7 +178,7 @@ export const CarFilters = ({ filters }) => {
 
   return (
     <div className="flex lg:flex-col justify-between gap-4">
-      {/* Mobile Filters */}
+     
       <div className="lg:hidden mb-4">
         <div className="flex items-center">
           <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
