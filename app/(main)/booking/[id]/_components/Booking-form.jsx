@@ -181,6 +181,7 @@ export function BookingForm({ car, testDriveInfo }) {
   // Create a function to determine which days should be disabled
   const isDayDisabled = (day) => {
     // Disable past dates
+    console.log(day)
     if (day < new Date()) {
       return true;
     }
@@ -197,6 +198,24 @@ export function BookingForm({ car, testDriveInfo }) {
     return !daySchedule || !daySchedule.isOpen;
   };
   
+   const isendDayDisabled = (day) => {
+    // Disable past dates
+    console.log(day)
+    if (day <= new Date(selectedDate)) {
+      return true;
+    }
+  
+    // Get day of week
+    const dayOfWeek = format(day, "EEEE").toUpperCase();
+  
+    // Find working hours for the day
+    const daySchedule = dealership?.workingHours?.find(
+      (schedule) => schedule.dayOfWeek === dayOfWeek
+    );
+  
+    // Disable if dealership is closed on this day
+    return !daySchedule || !daySchedule.isOpen;
+  };
   // Submit handler
   const onSubmit = async (data) => {
     if (!data?.timeSlot) {
@@ -376,6 +395,7 @@ export function BookingForm({ car, testDriveInfo }) {
                     <PopoverTrigger asChild>
                       <Button
                         variant="outline"
+                         disabled={!selectedDate}
                         className={cn(
                           "w-full justify-start text-left font-normal",
                           !field.value && "text-muted-foreground"
@@ -390,7 +410,7 @@ export function BookingForm({ car, testDriveInfo }) {
                         mode="single"
                         selected={field.value}
                         onSelect={field.onChange}
-                        disabled={isDayDisabled}
+                        disabled={isendDayDisabled}
                         initialFocus
                       />
                     </PopoverContent>

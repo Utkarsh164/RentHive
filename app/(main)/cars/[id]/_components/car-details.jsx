@@ -238,18 +238,19 @@ export function CarDetails({ car, testDriveInfo }) {
           )}
 
           {/* Book Test Drive Button */}
-          {car.status !== "SOLD" && car.status !== "UNAVAILABLE" && (
+          {car.status !== "SOLD" && car.status !== "UNAVAILABLE"  && (
             <Button
               className="w-full py-6 text-lg"
               onClick={handleBookTestDrive}
-              disabled={testDriveInfo.userTestDrive}
+              //disabled={testDriveInfo.userTestDrive}
             >
               <Calendar className="mr-2 h-5 w-5" />
               {testDriveInfo.userTestDrive
-                ? `Booked for ${format(
-                    new Date(testDriveInfo.userTestDrive.bookingDate),
-                    "EEEE, MMMM d, yyyy"
-                  )}`
+                 ? //`Booked for ${format(
+                //     new Date(testDriveInfo.userTestDrive.bookingDate),
+                //     "EEEE, MMMM d, yyyy"
+                //   )}`
+                 "Book Now"
                 : "Book Now"}
             </Button>
           )}
